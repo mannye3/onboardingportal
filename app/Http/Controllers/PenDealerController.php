@@ -294,7 +294,7 @@ class PenDealerController extends Controller
                  $pfachart_sec =  DB::connection('sqlsrv2')->table('tblTransaction')
                 ->join('tblInstitution', 'tblTransaction.DealerCode', '=', 'tblInstitution.InstitutionCode')
                 ->join('tblInstitutionType', 'tblInstitutionType.InstTypeRef', '=', 'tblInstitution.InstitutionType')
-                ->select('tblTransaction.Timestamp','tblTransaction.FaceValue')
+                ->select('tblTransaction.Timestamp','tblTransaction.FaceValue','tblTransaction.DealerCode')
                 ->where('tblInstitutionType.InstTypeRef', 3)
                 ->get();
 
@@ -308,9 +308,10 @@ class PenDealerController extends Controller
                 
                  $date = strtotime($pfachart->Timestamp);
                  $usi = (int)$pfachart->FaceValue;
+                 $dealer = $pfachart->DealerCode;
                
                   $date *= 1000;
-                   $chart2[] = [$date , $usi];
+                   $chart2[] = [$date , $usi, $dealer];
                   //  //array_push($chart1, $chart2);
                   // $count = 0;
                   // $chart1[$count] = $chart2;
